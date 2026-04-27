@@ -1,16 +1,16 @@
 require('dotenv').config();
 require("node:dns/promises").setServers(["1.1.1.1","8.8.8.8"]);
 const express = require("express");
+const cors = require('cors')
 const dbConnection = require("./config/dbConnection");
 const app = express();
 
 // Mdiileware
 app.use(express.json());
+app.use(cors());
 
 // Database Connection
 dbConnection()
-
-// mongodb+srv://ecobazar:IDsSZz15eEZgGAJq@cluster0.xvua968.mongodb.net/ecobazar?appName=Cluster0
 
 
 app.get('/', (req, res)=>{
