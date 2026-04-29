@@ -17,7 +17,7 @@ const userSchema = new Schema({
     phoneNumber: {
         type : String
     },
-    terms :{
+    trems :{
         type: Boolean
     },
     profile :{
