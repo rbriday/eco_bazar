@@ -11,7 +11,7 @@ const userSchema = new Schema({
     email: {
         type: String
      },
-    passowrd : {
+    password : {
         type: String
     },
     phoneNumber: {
