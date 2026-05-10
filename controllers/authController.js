@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/userSchema');
 const {mailverification} = require('../utils/email');
+const { emptyFieldValidation } = require('../utils/validation');
 
 let registrationController = async (req, res) => {
     let {
@@ -26,11 +27,7 @@ let registrationController = async (req, res) => {
         })
     }
 
-    if (!email || !password || !confirmPassword) {
-        return res.status(400).json({
-            message: "Please fill the all field"
-        })
-    }
+   emptyFieldValidation(res, email, password, confirmPassword)
 
     if (password !== confirmPassword) {
         return res.status(400).json({
