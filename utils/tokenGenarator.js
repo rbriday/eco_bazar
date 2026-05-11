@@ -9,6 +9,8 @@ let tokenGenarator = (data, secret, expire) => {
         expiresIn: expire
     })
 
+    return token
+
 }
 
 module.exports = tokenGenarator
