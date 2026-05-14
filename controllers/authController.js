@@ -65,7 +65,6 @@ let registrationController = async (req, res) => {
     });
 }
 // logingController
-
 let loginController = async (req, res) => {
     let {
         email,
@@ -96,9 +95,7 @@ let loginController = async (req, res) => {
     })
 
 }
-
 // forgotPasswordController
-
 let forgotPasswordController = async (req, res) => {
     let {
         email
@@ -124,9 +121,7 @@ let forgotPasswordController = async (req, res) => {
     })
 
 }
-
 // resetPasswordController 
-
 let resetPasswordController = async (req, res) => {
     let {
         newPassword,
@@ -159,9 +154,7 @@ let resetPasswordController = async (req, res) => {
         }
     });
 }
-
 // resentVerification email 
-
 let resentVerificationMail = async (req, res) => {
     let {
         email
@@ -180,6 +173,36 @@ let resentVerificationMail = async (req, res) => {
         message: "Please Check Your Email for Varification"
     })
 }
+// verifyEmailController
+let verifyEmailController = async (req, res) => {
+    const {
+        token
+    } = req.params
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async function (err, decoded) {
+       if(err){
+        res.status(400).json({
+            success : false,
+            message : "Unauthorized"
+        })
+       }else{
+        const userId = decoded.id
+        let findUser = await User.findById(userId);
+        if(findUser.isVerified){
+            res.status(400).json({
+                success: false,
+                message : "Email alreday verified"
+            })
+        }else{
+            findUser.isVerified = true
+            findUser.save()
+            res.status(200).json({
+                success : true,
+                message : "Email Verified Successfully"
+            })
+        }
+       }
+    });
+}
 
 
 module.exports = {
@@ -187,5 +210,6 @@ module.exports = {
     loginController,
     forgotPasswordController,
     resetPasswordController,
-    resentVerificationMail
+    resentVerificationMail,
+    verifyEmailController
 }
